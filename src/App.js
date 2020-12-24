@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import Nav from './components/Nav';
+import { AuthProvider } from './contexts/AuthContext';
+import PageRouter from './route/PageRouter';
+
+const App = () => {
+    return (
+        <Router>
+            <AuthProvider>
+                <Nav />
+                <PageRouter />
+            </AuthProvider>
+        </Router>
+    );
+};
 
 export default App;
