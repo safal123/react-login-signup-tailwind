@@ -13,17 +13,13 @@ export function AuthProvider({ children }) {
     useEffect(() => {}, []);
 
     async function register(data) {
-        try {
-            const response = await axios.post(
-                'https://laravel-react-redux.herokuapp.com/api/register',
-                data
-            );
-            setAuth(true);
-            console.log(auth);
-            return response;
-        } catch (error) {
-            return error;
-        }
+        const response = await axios.post(
+            'https://laravel-react-redux.herokuapp.com/api/register',
+            data
+        );
+        setAuth(true);
+        console.log(auth);
+        return response;
     }
 
     const value = {
