@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+import { useAuth } from '../contexts/AuthContext';
 import TextInput from './Inputs/TextInput';
 import Button from './Inputs/Button';
 
@@ -14,6 +15,7 @@ const Login = () => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const history = useHistory();
+    const { setAuth } = useAuth();
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -36,6 +38,7 @@ const Login = () => {
                 setPasswordError(false);
                 setServerError('');
                 localStorage.setItem('token', response.data.success.token);
+                setAuth(true);
                 history.push('/');
             })
             .catch((error) => {

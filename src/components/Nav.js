@@ -9,19 +9,16 @@ const Nav = () => {
     const [width] = useWindowSize();
     const [isMobile, setIsMobile] = useState(false);
     const history = useHistory();
-    // const { auth } = useAuth();
-    const [auth, setAuth] = useState(false);
+    const { auth, setAuth } = useAuth();
 
+    // const [auth, setAuth] = useState(false);
     useEffect(() => {
-        if (localStorage.getItem('token')) {
-            setAuth(true);
-        } else {
-            setAuth(false);
-        }
+        console.log(auth);
     }, []);
 
     const logout = () => {
         localStorage.removeItem('token');
+        setAuth(false);
         history.push('/login');
     };
     return (
@@ -60,13 +57,6 @@ const Nav = () => {
                                         className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
                                     >
                                         Projects
-                                    </a>
-                                    <a
-                                        onClick={() => logout()}
-                                        to='/login'
-                                        className='text-gray-300 cursor-pointer hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
-                                    >
-                                        Logout
                                     </a>
                                 </div>
                             </div>

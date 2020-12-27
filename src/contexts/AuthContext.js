@@ -8,23 +8,22 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-    const [auth, setAuth] = useState(false);
-
-    useEffect(() => {}, []);
+    const [auth, setAuth] = useState(
+        localStorage.getItem('token') ? true : false
+    );
 
     async function register(data) {
         const response = await axios.post(
             'https://laravel-react-redux.herokuapp.com/api/register',
             data
         );
-        setAuth(true);
-        console.log(auth);
         return response;
     }
 
     const value = {
-        auth,
         register,
+        auth,
+        setAuth,
     };
 
     return (

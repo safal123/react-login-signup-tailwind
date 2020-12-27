@@ -14,7 +14,7 @@ const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState();
     const history = useHistory();
-    const { register, auth } = useAuth();
+    const { register, auth, setAuth } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,10 +36,10 @@ const Register = () => {
                 setErrors();
                 setIsLoading(false);
                 localStorage.setItem('token', data.data.success.token);
+                setAuth(true);
                 history.push('/');
             })
             .catch((error) => {
-                // console.log(error.response);
                 setErrors(error.response.data.errors);
                 setIsLoading(false);
             });
