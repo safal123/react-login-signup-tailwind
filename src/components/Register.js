@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import Button from './Inputs/Button';
 
 const Register = () => {
@@ -14,7 +12,6 @@ const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState();
     const history = useHistory();
-    const { register, auth, setAuth } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,18 +28,6 @@ const Register = () => {
             setIsLoading(false);
             return;
         }
-        register(data)
-            .then((data) => {
-                setErrors();
-                setIsLoading(false);
-                localStorage.setItem('token', data.data.success.token);
-                setAuth(true);
-                history.push('/');
-            })
-            .catch((error) => {
-                setErrors(error.response.data.errors);
-                setIsLoading(false);
-            });
     };
     return (
         <div>
@@ -58,8 +43,6 @@ const Register = () => {
                             Create new account
                         </h2>
                     </div>
-                    {errors && <pre>{JSON.stringify(errors, null, '\t')}</pre>}
-                    {/* {errors && JSON.parse(errors)} */}
                     {errors && (
                         <div className='bg-red-100 px-4 py-4 text-sm font-semibold text-red-700 rounded shadow-sm'>
                             {Object.keys(errors).map((error, index) => (

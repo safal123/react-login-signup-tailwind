@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^5.9.0",
+    "@reduxjs/toolkit": "^1.8.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
@@ -13,8 +14,10 @@
     "postcss-cli": "^8.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "redux": "^4.1.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1",
     "web-vitals": "^0.2.4"
   },

@@ -1,12 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
 const PublicRoute = ({ component: Component, ...rest }) => {
-    const isAuth = localStorage.getItem('token') ? true : false;
+    const { isLoggedIn } = useSelector((state) => state.auth)
     return (
         <Route
             {...rest}
-            render={(props) => (!isAuth ? <Component /> : <Redirect to='/' />)}
+            render={(props) => (!isLoggedIn ? <Component /> : <Redirect to='/' />)}
         />
     );
 };

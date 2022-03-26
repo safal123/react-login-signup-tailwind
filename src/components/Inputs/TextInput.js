@@ -10,8 +10,6 @@ const TextInput = ({
     placeholder,
     classAttr,
 }) => {
-    // const classAttr =
-    //     ' appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm';
     return (
         <div>
             <label htmlFor='email-address' className='sr-only'>
@@ -20,7 +18,7 @@ const TextInput = ({
             <input
                 name={name ?? 'name'}
                 type={type ?? 'text'}
-                required={required ?? true}
+                required={required ?? false}
                 value={value ?? name}
                 onChange={(e) => setName(e.target.value)}
                 className={(nameError ? 'border-red-500' : '') + classAttr}

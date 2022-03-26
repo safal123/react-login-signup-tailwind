@@ -1,19 +1,18 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-import Nav from './components/Nav';
-import { AuthProvider } from './contexts/AuthContext';
+import store from './store';
+import Nav from './components/Inputs/Nav/Nav';
 import PageRouter from './route/PageRouter';
 
 const App = () => {
     return (
-        <Router>
-            <AuthProvider>
+        <Provider store={store}>
+            <Router>
                 <Nav />
                 <PageRouter />
-            </AuthProvider>
-        </Router>
+            </Router>
+        </Provider>
     );
 };
 

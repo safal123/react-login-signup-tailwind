@@ -1,51 +1,63 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { auth as authActions } from '../store/reducers';
+import { useDispatch } from 'react-redux';
 
-import { useAuth } from '../contexts/AuthContext';
 import TextInput from './Inputs/TextInput';
 import Button from './Inputs/Button';
+import { getUser } from '../store/reducers/auth';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('test@safal.com');
+    const [password, setPassword] = useState('password');
     const [serverError, setServerError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const history = useHistory();
-    const { setAuth } = useAuth();
+    const authAction = authActions.actions
+    const dispatch = useDispatch();
 
     const onSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         if (!email || !password) {
             setServerError('Please fill out the input fields');
-            setEmailError(true);
-            setPasswordError(true);
+            if (!email) {
+                setEmailError(true);
+            }
+            if (!password) {
+                setPasswordError(true);
+            }
             setIsLoading(false);
             return;
         }
+        var basicAuth = 'Basic ' + window.btoa(email + ':' + password);
         await axios
-            .post('https://laravel-react-redux.herokuapp.com/api/login', {
-                email,
-                password,
-            })
+            .post('http://localhost:8000/auth/jwt/token', { headers: { 'Authorization': basicAuth }},
+                {
+                    auth: {
+                        username: email,
+                        password: password,
+                    }
+                }
+            )
             .then((response) => {
                 setIsLoading(false);
                 setEmailError(false);
                 setPasswordError(false);
                 setServerError('');
-                localStorage.setItem('token', response.data.success.token);
-                setAuth(true);
+                localStorage.setItem('token', response.data.data.jwt);
+                dispatch(getUser())
+                dispatch(authAction.refresh())
                 history.push('/');
             })
             .catch((error) => {
                 setIsLoading(false);
                 setEmailError(false);
                 setPasswordError(false);
-                const message = error.response.data.error;
+                const message = error.response.data.error ?? error.response.data.message;
                 setServerError(message);
             });
     };
@@ -64,7 +76,7 @@ const Login = () => {
                         </h2>
                     </div>
                     {serverError && (
-                        <div className='bg-red-200 px-4 py-4 font-semibold text-red-700 rounded shadow-sm'>
+                        <div className='bg-red-100 px-4 py-4 font-small text-red-700 rounded shadow-sm'>
                             {serverError}
                             {'.'}
                         </div>
@@ -117,10 +129,7 @@ const Login = () => {
                             </div>
 
                             <div className='text-sm'>
-                                <a
-                                    href='#'
-                                    className='font-medium text-indigo-600 hover:text-indigo-500'
-                                >
+                                <a href="/" className='font-medium text-indigo-600 hover:text-indigo-500'>
                                     Forgot your password?
                                 </a>
                             </div>
